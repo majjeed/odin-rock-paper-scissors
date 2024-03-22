@@ -35,17 +35,17 @@ function playRound(playerSelection, computerSelection) {
   let winScore = 0;
   let loseScore = 0;
   for (let i=0; i<5; i++) {
-      const promptPlayerSelection = prompt('Choose rock or paper or scissor').toLowerCase();
+      const promptPlayerSelection = prompt('Choose rock or paper or scissor')?.toLowerCase();
       const computerSelection = getComputerChoice();
       let result = playRound(promptPlayerSelection, computerSelection);
       if (result === 'you win') {
-        console.log('you win this round');
+        console.log('you played: ' + promptPlayerSelection + '\n you win this round');
         winScore++;
       } else if (result === 'you lose') {
-        console.log('you lose this round');
+        console.log('you played: ' + promptPlayerSelection + '\n you lose this round');
         loseScore++;
       } else {
-        console.log('you tie this round');
+        console.log('you played: ' + promptPlayerSelection + '\n you tie this round');
       }
   }
   if (winScore > loseScore) {
