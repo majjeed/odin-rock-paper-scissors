@@ -1,59 +1,82 @@
 function getComputerChoice() {
     let randNum = Math.floor(Math.random() * 3) + 1;
-    let computerChoice = 
-        randNum === 1 ? 'rock' : 
-        randNum === 2 ? 'paper' : 'scissor' ;
+    let computerChoice =
+        randNum === 1 ? 'rock' :
+            randNum === 2 ? 'paper' : 'scissor';
     return computerChoice;
-} 
+}
 
-// function playerSelection(str) {
-//     return str.toLowerCase();
-// }
+let playerScore = 0;
+let computerScore = 0;
+let roundNum = 1;
 
-//use case statement much better multiple answers
-//easy to make spelling error set better variables 
-//entering null makes you tie
 function playRound(playerSelection, computerSelection) {
-    //let playerSelection = playerSelection.toLowerCase();
     if (playerSelection === 'rock' && computerSelection === 'paper') {
+        computerScore++;
+        roundNum++;
         return 'you lose';
     } else if (playerSelection === 'rock' && computerSelection === 'scissor') {
+        playerScore++;
+        roundNum++;
         return 'you win';
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
+        playerScore++;
+        roundNum++;
         return 'you win';
     } else if (playerSelection === 'paper' && computerSelection === 'scissor') {
+        computerScore++;
+        roundNum++;
         return 'you lose';
     } else if (playerSelection === 'scissor' && computerSelection === 'rock') {
+        computerScore++;
+        roundNum++;
         return 'you lose';
     } else if (playerSelection === 'scissor' && computerSelection === 'paper') {
+        playerScore++;
+        roundNum++;
         return 'you win';
     } else {
+        roundNum++;
         return 'you tie';
     }
-  }
+}
 
-  let winScore = 0;
-  let loseScore = 0;
-  for (let i=0; i<5; i++) {
-      const promptPlayerSelection = prompt('Choose rock or paper or scissor')?.toLowerCase();
-      const computerSelection = getComputerChoice();
-      let result = playRound(promptPlayerSelection, computerSelection);
-      if (result === 'you win') {
-        console.log('you played: ' + promptPlayerSelection + '\n you win this round');
-        winScore++;
-      } else if (result === 'you lose') {
-        console.log('you played: ' + promptPlayerSelection + '\n you lose this round');
-        loseScore++;
-      } else {
-        console.log('you played: ' + promptPlayerSelection + '\n you tie this round');
-      }
-  }
-  if (winScore > loseScore) {
-      console.log('You Won the game');
-    } else if (loseScore > winScore) {
-        console.log('You Lost the game');
-    } else {
-      console.log('Good Game you Tied');
-  }
+let rockBtn = document.querySelector("#rock");
+let paperBtn = document.querySelector("#paper");
+let scissorBtn = document.querySelector("#scissor");
 
-  
+let menu = document.querySelector("#menu");
+let results = document.querySelector("#results");
+
+menu.addEventListener("click", (event) => {
+    let target = event.target;
+    
+    switch(target.id) {
+        case "rock":
+            results.textContent = `Round Number ${roundNum}: ` + playRound("rock", getComputerChoice());
+            findWinner();
+            break;
+        case "paper":
+            results.textContent = `Round Number ${roundNum}: ` + playRound("paper", getComputerChoice());
+            findWinner();
+            break;
+        case "scissor":
+            results.textContent = `Round Number ${roundNum}: ` + playRound("scissor", getComputerChoice());
+            findWinner();
+            break;
+    }
+});
+
+function findWinner() {
+    if (playerScore === 5) {
+        results.textContent = "You Won the Game!!!";
+        playerScore = 0;
+        computerScore = 0;
+        roundNum = 0;
+    } else if (computerScore === 5) {
+        results.textContent = "You Lost the Game!!!";
+        playerScore = 0;
+        computerScore = 0;
+        roundNum = 0;
+    }
+}
